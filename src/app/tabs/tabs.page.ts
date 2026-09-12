@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular';
+﻿import { Component } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { triangle, images, square } from 'ionicons/icons';
 
@@ -7,7 +6,7 @@ import { triangle, images, square } from 'ionicons/icons';
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  standalone: false
 })
 export class TabsPage {
   constructor() {

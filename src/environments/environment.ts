@@ -3,5 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // On a physical phone, replace localhost with your computer's LAN IP.
+  apiUrl: 'http://localhost/appmovil-backend/api.php'
 };

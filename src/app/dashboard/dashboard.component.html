@@ -1,0 +1,54 @@
+<ion-content [fullscreen]="true">
+  <div class="dashboard-container">
+    
+    <!-- Encabezado -->
+    <header class="dashboard-header">
+      <div class="user-info">
+        <h2>Dashboard</h2>
+        <p>Hola, {{ currentUser?.name }} <span class="badge">{{ currentUser?.role_id === 1 ? 'Admin' : 'User' }}</span></p>
+      </div>
+      <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
+    </header>
+
+    <!-- Tarjeta de Contenido -->
+    <div class="glass-panel">
+      <div class="panel-header">
+        <h3>Gestión de Usuarios</h3>
+        <!-- Solo el admin ve el botón de crear -->
+        <button *ngIf="currentUser?.role_id === 1" class="add-btn" (click)="createUser()">+ Nuevo Usuario</button>
+      </div>
+
+      <!-- Tabla responsiva -->
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <!-- Solo mostramos la columna "Acciones" si es admin -->
+              <th *ngIf="currentUser?.role_id === 1">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of users">
+              <td>{{ u.id }}</td>
+              <td>{{ u.name }}</td>
+              <td>{{ u.email }}</td>
+              <!-- Botones de acción protegidos -->
+              <td *ngIf="currentUser?.role_id === 1" class="action-cell">
+                <button class="edit-btn" (click)="editUser(u)">Editar</button>
+                <button class="delete-btn" (click)="deleteUser(u.id)">Eliminar</button>
+              </td>
+            </tr>
+            <!-- Mensaje si no hay usuarios -->
+            <tr *ngIf="users.length === 0">
+              <td colspan="4" class="empty-state">No hay usuarios para mostrar.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

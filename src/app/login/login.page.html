@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <div class="login-container">
+    <div class="glass-card">
+      
+      <!-- Header icon -->
+      <div class="icon-container">
+        <ion-icon name="sunny-outline"></ion-icon>
+      </div>
+
+      <!-- Heading -->
+      <div class="title-container">
+        <h1>Welcome back!</h1>
+        <p>Sign in to access your guided meditations, daily practices, and personal journey</p>
+      </div>
+
+      <!-- Sign-in form -->
+      <form (ngSubmit)="onLogin()">
+        
+        <!-- Email input -->
+        <div class="input-group">
+          <label for="emailInput">Email</label>
+          <input id="emailInput" type="email" [(ngModel)]="credentials.email" name="email" placeholder="Enter your email">
+        </div>
+
+        <!-- Password input -->
+        <div class="input-group">
+          <label for="passwordInput">Password</label>
+          <input id="passwordInput" type="password" [(ngModel)]="credentials.password" name="password" placeholder="••••••••">
+        </div>
+
+        <div class="options">
+          <label class="checkbox-label">
+            <input type="checkbox"> Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn">Log In</button>
+
+      </form>
+    </div>
+  </div>
+</ion-content>
