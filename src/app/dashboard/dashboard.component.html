@@ -5,7 +5,7 @@
     <header class="dashboard-header">
       <div class="user-info">
         <h2>Dashboard</h2>
-        <p>Hola, {{ currentUser?.name }} <span class="badge">{{ currentUser?.role_id === 1 ? 'Admin' : 'User' }}</span></p>
+        <p>Hola, {{ currentUser?.name }} <span class="badge">{{ isAdmin ? 'Admin' : 'User' }}</span></p>
       </div>
       <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
     </header>
@@ -15,7 +15,7 @@
       <div class="panel-header">
         <h3>Gestión de Usuarios</h3>
         <!-- Solo el admin ve el botón de crear -->
-        <button *ngIf="currentUser?.role_id === 1" class="add-btn" (click)="createUser()">+ Nuevo Usuario</button>
+        <button *ngIf="isAdmin" class="add-btn" (click)="createUser()">+ Nuevo Usuario</button>
       </div>
 
       <!-- Tabla responsiva -->
@@ -27,7 +27,7 @@
               <th>Nombre</th>
               <th>Email</th>
               <!-- Solo mostramos la columna "Acciones" si es admin -->
-              <th *ngIf="currentUser?.role_id === 1">Acciones</th>
+              <th *ngIf="isAdmin">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +36,7 @@
               <td>{{ u.name }}</td>
               <td>{{ u.email }}</td>
               <!-- Botones de acción protegidos -->
-              <td *ngIf="currentUser?.role_id === 1" class="action-cell">
+              <td *ngIf="isAdmin" class="action-cell">
                 <button class="edit-btn" (click)="editUser(u)">Editar</button>
                 <button class="delete-btn" (click)="deleteUser(u.id)">Eliminar</button>
               </td>

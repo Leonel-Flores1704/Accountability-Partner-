@@ -28,8 +28,7 @@ export class LoginPage {
       const login = await this.userApi.login(this.credentials.email, this.credentials.password);
 
       localStorage.setItem('user', JSON.stringify(login.user));
-      localStorage.setItem('auth_token', login.token);
-
+      localStorage.setItem('auth_token', login.token || 'token-generico');
       await Swal.fire({
         icon: 'success',
         title: 'Welcome!',

@@ -2,27 +2,32 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosError } from 'axios';
 import { environment } from '../../environments/environment';
 
+// 1. Interfaz actualizada para coincidir exactamente con tu base de datos appmovil
 export interface User {
   id: number;
   name: string;
   email: string;
-  role_id: number;
+  role_id: number; // Usamos role_id como en MySQL
   created_at?: string;
 }
 
+// 2. Interfaz para crear/actualizar (Payload)
 export interface UserPayload {
   name: string;
   email: string;
-  password: string;
-  role_id: 1 | 2;
+  password?: string;
+  role_id: number;
 }
+
+export type UserUpdatePayload = Partial<UserPayload>;
 
 export interface LoginResult {
   user: User;
-  token: string;
+  token?: string; // Opcional, ya que el PHP actual no genera tokens JWT
 }
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
+  status?: number;
   data: T;
   message?: string;
 }
@@ -47,9 +52,10 @@ export class UserApiService {
     return response.data.data;
   }
 
+  // 3. ¡CORREGIDO! Ahora apunta a '?resource=users' y devuelve directamente el arreglo de usuarios
   async list(): Promise<User[]> {
-    const response = await this.client.get<ApiResponse<{ users: User[] }>>('?action=get_users');
-    return response.data.data.users;
+    const response = await this.client.get<ApiResponse<User[]>>('?resource=users');
+    return response.data.data;
   }
 
   async get(id: number): Promise<User> {
@@ -58,8 +64,8 @@ export class UserApiService {
   }
 
   async create(user: UserPayload): Promise<User> {
-    const response = await this.client.post<ApiResponse<{ user: User }>>('?action=create_user', user);
-    return response.data.data.user;
+    const response = await this.client.post<ApiResponse<User>>('?resource=users', user);
+    return response.data.data;
   }
 
   async replace(id: number, user: UserPayload): Promise<User> {
@@ -67,7 +73,7 @@ export class UserApiService {
     return response.data.data;
   }
 
-  async update(id: number, changes: Partial<UserPayload>): Promise<User> {
+  async update(id: number, changes: UserUpdatePayload): Promise<User> {
     const response = await this.client.patch<ApiResponse<User>>(`?resource=users&id=${id}`, changes);
     return response.data.data;
   }
