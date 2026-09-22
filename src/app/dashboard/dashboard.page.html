@@ -1,0 +1,123 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="header-content">
+      <div>
+        <h1>Personal y Usuarios</h1>
+        <p>Gestiona usuarios, roles y permisos del sistema</p>
+      </div>
+      <div class="header-buttons">
+        <ion-button class="btn-add" (click)="openAddForm()" *ngIf="!showForm">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Agregar usuario
+        </ion-button>
+        <ion-button class="btn-logout" (click)="confirmLogout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          Salir
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- TARJETAS DE ESTADÍSTICAS -->
+  <div class="stats-row" *ngIf="!showForm">
+    <ion-card class="stat-card">
+      <span class="stat-label">Total Usuarios</span>
+      <span class="stat-value">{{ totalUsers }}</span>
+    </ion-card>
+    <ion-card class="stat-card">
+      <span class="stat-label">Administradores</span>
+      <span class="stat-value">{{ totalAdmins }}</span>
+    </ion-card>
+    <ion-card class="stat-card">
+      <span class="stat-label">Usuarios</span>
+      <span class="stat-value">{{ totalRegular }}</span>
+    </ion-card>
+  </div>
+
+  <!-- FORMULARIO DE CREAR / EDITAR -->
+  <ion-card *ngIf="showForm" class="form-card">
+    <ion-card-header>
+      <ion-card-title>{{ isEditing ? 'Editar Usuario' : 'Nuevo Usuario' }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="formData.name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input type="email" [(ngModel)]="formData.email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña {{ isEditing ? '(Opcional)' : '' }}</ion-label>
+        <ion-input type="password" [(ngModel)]="formData.password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Rol</ion-label>
+        <ion-select [(ngModel)]="formData.role_id">
+          <ion-select-option [value]="1">Administrador</ion-select-option>
+          <ion-select-option [value]="2">Usuario</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div class="form-actions">
+        <ion-button color="medium" fill="outline" (click)="resetForm()">Cancelar</ion-button>
+        <ion-button class="btn-add" (click)="saveUser()">Guardar</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- LISTA DE USUARIOS -->
+  <ion-card class="table-card" *ngIf="!showForm">
+    <div class="table-header">
+      <h3>Usuarios</h3>
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar"
+        class="search-bar"
+        showClearButton="focus">
+      </ion-searchbar>
+    </div>
+
+    <ion-list>
+      <ion-item *ngFor="let user of filteredUsers" lines="full" class="user-row">
+        <div class="avatar" [class.admin]="user.role_id === 1">
+          {{ user.name.charAt(0) }}
+        </div>
+
+        <ion-label>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.email }}</p>
+        </ion-label>
+
+        <ion-badge class="role-badge" [class.admin]="user.role_id === 1" slot="end">
+          {{ user.role_id === 1 ? 'Administrador' : 'Usuario' }}
+        </ion-badge>
+
+        <div class="actions" slot="end">
+          <ion-button fill="clear" (click)="viewUser(user)">
+            <ion-icon name="eye-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="editUser(user)">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="confirmDelete(user)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+
+      <ion-item *ngIf="!filteredUsers.length" lines="none">
+        <ion-label class="ion-text-center">No se encontraron usuarios.</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+</ion-content>
