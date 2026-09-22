@@ -48,4 +48,8 @@ export class LoginPage {
       });
     }
   }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
 }

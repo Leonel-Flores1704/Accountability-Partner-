@@ -2,23 +2,22 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
-  
-  /* Aquí debes poner una imagen en tu carpeta src/assets/ */
-  /* Si no tienes una, temporalmente se verá un gradiente oscuro */
-  background: linear-gradient(135deg, #1e1e2f, #2a2a40);
-background: linear-gradient(135deg, #1e1e2f, #2a2a40);  background-size: cover;
+  justify-content: flex-end;
+  padding: 20px 5px;
+
+  background-image: url('/assets/images/imagenfondo.jpg');
+  background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
   position: relative;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  /* Capa oscura semitransparente sobre el fondo */
   &::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.2);
     z-index: 1;
   }
 }
@@ -28,22 +27,26 @@ background: linear-gradient(135deg, #1e1e2f, #2a2a40);  background-size: cover;
   z-index: 2;
   width: 100%;
   max-width: 400px;
-  /* Efecto Cristal */
-  background: rgba(255, 255, 255, 0.1);
+
+  // Antes: rgba(255,255,255,0.1) -> casi invisible. Ahora mucho más sólido:
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 30px;
   padding: 40px 30px;
-  color: #ffffff;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  // Antes: #ffffff -> ahora oscuro, para que se lea sobre fondo blanco
+  color: #1a2e2a;
+  box-shadow: 0 8px 32px 0 rgba(5, 57, 57, 0.2);
+  margin-right: 10vw;
 
   .icon-container {
     text-align: center;
     margin-bottom: 20px;
     ion-icon {
       font-size: 40px;
-      color: rgba(255, 255, 255, 0.8);
+      color: #1cb23a;
     }
   }
 
@@ -52,12 +55,13 @@ background: linear-gradient(135deg, #1e1e2f, #2a2a40);  background-size: cover;
     margin-bottom: 30px;
     h1 {
       font-size: 1.8rem;
-      font-weight: 500;
+      font-weight: 600;
       margin: 0 0 10px 0;
+      color: #053939;
     }
     p {
       font-size: 0.85rem;
-      color: #d1d5db;
+      color: #5a6b68;
       line-height: 1.4;
       margin: 0;
     }
@@ -69,31 +73,34 @@ background: linear-gradient(135deg, #1e1e2f, #2a2a40);  background-size: cover;
       display: block;
       font-size: 0.75rem;
       margin-bottom: 8px;
-      color: #d1d5db;
+      color: #4a5a57;
       margin-left: 5px;
     }
     input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(5, 57, 57, 0.04);
+      border: 1px solid rgba(5, 57, 57, 0.15);
       border-radius: 12px;
       padding: 14px 16px;
-      color: white;
+      color: #1a2e2a;
       font-size: 0.95rem;
       outline: none;
       transition: all 0.3s ease;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(5, 57, 57, 0.4);
       }
 
       &:focus {
-        background: rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.6);
+        background: rgba(5, 57, 57, 0.08);
+        border-color: #1cb23a;
       }
     }
     input[type="password"] {
       letter-spacing: 3px;
+    }
+    &:focus-within {
+      transform: scale(1.05);
     }
   }
 
@@ -102,47 +109,79 @@ background: linear-gradient(135deg, #1e1e2f, #2a2a40);  background-size: cover;
     justify-content: space-between;
     align-items: center;
     font-size: 0.75rem;
-    color: #d1d5db;
+    color: #4a5a57;
     margin-bottom: 25px;
 
     .checkbox-label {
       display: flex;
       align-items: center;
       cursor: pointer;
+      color: #1a2e2a;
       input {
         margin-right: 8px;
-        accent-color: #a855f7; /* Color del checkbox */
+        accent-color: #1cb23a;
       }
     }
 
     .forgot-link {
-      color: #d1d5db;
+      color: #053939;
       text-decoration: none;
       transition: color 0.3s;
       &:hover {
-        color: white;
+        color: #1cb23a;
       }
     }
   }
 
   .submit-btn {
     width: 100%;
-    background: #ffffff;
-    color: #111827;
+    background: #053939;
+    color: #ffffff;
     font-weight: 600;
     border: none;
     border-radius: 50px;
     padding: 15px;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     transition: background 0.3s, transform 0.1s;
 
     &:hover {
-      background: #f3f4f6;
+      background: #1cb23a;
+      color: #fff;
     }
     &:active {
-      transform: scale(0.98);
+      transform: scale(0.92);
     }
+  }
+
+  .submit-btn-Singup {
+    width: 100%;
+    background: rgba(5, 57, 57, 0.06);
+    color: #053939;
+    font-weight: 600;
+    border: 1px solid #1cb23a;
+    border-radius: 50px;
+    padding: 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: background 0.3s, transform 0.1s;
+
+    &:hover {
+      background: #1cb23a;
+      color: #fff;
+    }
+    &:active {
+      transform: scale(0.92);
+    }
+  }
+
+  .not_account {
+    padding: 10px;
+    color: #4a5a57;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 }
