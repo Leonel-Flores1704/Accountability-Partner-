@@ -52,6 +52,15 @@ export class UserApiService {
     return response.data.data;
   }
 
+  async register(name: string, email: string, password: string): Promise<LoginResult> {
+    const response = await this.client.post<ApiResponse<User>>('?resource=users', {
+      name,
+      email,
+      password
+    });
+    return { user: response.data.data };
+  }
+
   // 3. ¡CORREGIDO! Ahora apunta a '?resource=users' y devuelve directamente el arreglo de usuarios
   async list(): Promise<User[]> {
     const response = await this.client.get<ApiResponse<User[]>>('?resource=users');
